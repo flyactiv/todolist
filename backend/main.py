@@ -1,4 +1,4 @@
-from flask import Flask, requestm, jsonify
+from flask import Flask, request, jsonify
 from flask_restx import Api, Resource,fields
 from config import DevConfig
 from models import Recipe, User
@@ -26,15 +26,13 @@ recipe_model=api.model(
     }
 )
 
-
-
-
+#model (serializer)
 signup_model=api.model(
-    'SignUp',
+    "SignUp",
     {
-        username:fields.String(),
-        email:fields.String(),
-        password:fields.String()
+        "username":fields.String(),
+        "email":fields.String(),
+        "password":fields.String()
     }
 )
 
@@ -48,17 +46,16 @@ class HelloResource(Resource):
 
 @api.route('/signup')
 class SignUp(Resource):
-    @api.marshal_with(signup_model)
     @api.expect(signup_model)
     def post(self):
         data=request.get_json()
 
         username=data.get('username')
 
-        db_user=User.query.filter(username=username).first()
+        db_user=User.query.filter_by(username=username).first()
 
         if db_user is not None:
-            return jsonify({"message":f"User with username{username} already exists"})
+            return jsonify({"message":f"User with username {username} already exists"})
 
         new_user=User(
             username=data.get('username'),
@@ -68,7 +65,7 @@ class SignUp(Resource):
 
         new_user.save()
 
-        return new_user,201
+        return jsonify({"message":"User created successfuly"})
 
 
 @api.route('/login')

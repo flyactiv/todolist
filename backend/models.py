@@ -50,5 +50,9 @@ class User(db.Model):
     email = db.Column(db.String(80),nullable=False)
     password = db.Column(db.Text(),nullable=False)
 
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
     def __repr__(self):
         return f"<User {self.username}>"
