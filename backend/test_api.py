@@ -54,7 +54,39 @@ class APITestCase(unittest.TestCase):
         status_code = login_response.status_code
 
         self.assertEqual(status_code, 200)
+
+        json=login_response.json
+
+        #print (json)
         
+
+
+    def test_get_all_recipes(self):
+        """TEST GETTING ALL RECEIPES"""
+        responce = self.client.get('/recipe/recipes')
+
+        #print(responce.json)
+
+        status_code = responce.status_code
+
+        self.assertEqual(status_code, 200)
+
+
+    def test_get_one_recipe(self):
+        pass
+
+
+    def test_create_recipe(self):
+        pass
+
+
+    def test_update_recipe(self):
+        pass
+
+
+    def test_delete_recipe(self):
+        pass
+
 
 
     def tearDown(self):
