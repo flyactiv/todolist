@@ -73,15 +73,51 @@ class APITestCase(unittest.TestCase):
 
 
     def test_get_one_recipe(self):
-        pass
+        """TEST GETTING A RECEIPE BY ID"""
+        id=1
+        responce=self.client.get(f'/recipe/recipe/{id}')
+
+        status_code=responce.status_code
+
+
+        self.assertEqual(status_code, 404)
+
+
 
 
     def test_create_recipe(self):
-        pass
+        signup_response = self.client.post('/auth/signup',
+            json={"username":"testuser", 
+            "email":"test@email.com", 
+            "password": "testpassword"}
+        )
+
+        login_response=self.client.post('/auth/login',
+            json={"username":"testuser", 
+            "password": "testpassword"}
+        )
+
+        access_token=login_response.json["access_token"]
+
+        create_recipe_response=self.client.post( '/recipe/recipes',
+            json={
+                "title": "test title",
+                "description": "test description",
+            },
+            headers={"Authorization":f"Bearer {access_token}"}
+        )
+
+        status_code=create_recipe_response.status_code
+
+        self.assertEqual(status_code, 201)
+
+
 
 
     def test_update_recipe(self):
         pass
+
+
 
 
     def test_delete_recipe(self):
