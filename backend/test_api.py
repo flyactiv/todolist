@@ -86,6 +86,7 @@ class APITestCase(unittest.TestCase):
 
 
     def test_create_recipe(self):
+        """TEST CREATING A RECEIPE"""
         signup_response = self.client.post('/auth/signup',
             json={"username":"testuser", 
             "email":"test@email.com", 
@@ -115,13 +116,79 @@ class APITestCase(unittest.TestCase):
 
 
     def test_update_recipe(self):
-        pass
+        signup_response = self.client.post('/auth/signup',
+            json={"username":"testuser", 
+            "email":"test@email.com", 
+            "password": "testpassword"}
+        )
+
+        login_response = self.client.post('/auth/login',
+            json={"username":"testuser", 
+            "password": "testpassword"}
+        )
+
+        access_token=login_response.json["access_token"]
+
+        create_recipe_response=self.client.post( '/recipe/recipes',
+            json={
+                "title": "test title",
+                "description": "test description",
+            },
+            headers={"Authorization":f"Bearer {access_token}"}
+        )
+
+        status_code=create_recipe_response.status_code
+
+        id=1
+        
+        update_response=self.client.put( f'/recipe/recipe/{id}',
+            json={
+                "title": "test title updated",
+                "description": "test description updated",
+            },
+            headers={"Authorization":f"Bearer {access_token}"}
+        )
+
+        status_code=update_response.status_code
+
+        self.assertEqual(status_code,200)
+
+        
 
 
 
 
     def test_delete_recipe(self):
-        pass
+        signup_response = self.client.post('/auth/signup',
+            json={"username":"testuser", 
+            "email":"test@email.com", 
+            "password": "testpassword"}
+        )
+
+        login_response = self.client.post('/auth/login',
+            json={"username":"testuser", 
+            "password": "testpassword"}
+        )
+
+        access_token=login_response.json["access_token"]
+
+        create_recipe_response=self.client.post( '/recipe/recipes',
+            json={
+                "title": "test title",
+                "description": "test description",
+            },
+            headers={"Authorization":f"Bearer {access_token}"}
+        )
+
+
+        id=1
+        delete_response=self.client.delete( f'/recipe/recipe/{id}',
+            headers={"Authorization":f"Bearer {access_token}"}
+        )
+
+        status_code=delete_response.status_code
+
+        self.assertEqual(status_code, 200)
 
 
 
