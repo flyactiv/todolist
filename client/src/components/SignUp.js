@@ -1,26 +1,26 @@
 import React,{useState} from 'react';
 import {Form, Button} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import {useForm} from 'react-hook-form';
 
 
 const SignUpPage=()=>{
-    const [username, setUsername]=useState('')
-    const [email, setEmail]=useState('')
-    const [password, setPassword]=useState('')
-    const [confirmPassword, setConfirmPassword]=useState('')
+    
 
-    const submitForm=()=>{
-        console.log('form submitted');
-        console.log(username);
-        console.log(email);
-        console.log(password);
-        console.log(confirmPassword);
 
-        setUsername('')
-        setEmail('')
-        setPassword('')
-        setConfirmPassword('')
+    const {register,watch,handleSubmit,reset,formState: { errors } } = useForm();
+
+
+    const submitForm=(data)=>{
+        console.log(data);
+
+        reset();
     }
+
+    console.log(watch("username"));
+    console.log(watch("email"));
+    console.log(watch("password"));
+    console.log(watch("confirmPassword"));
 
     return(
         <div className="container">
@@ -30,44 +30,52 @@ const SignUpPage=()=>{
                     <Form.Group>
                         <Form.Label>Username</Form.Label>
                         <Form.Control type="text" placeholder="Your username"
-                        value={username}
-                        name="username"
-                        onChange={(e)=>{setUsername(e.target.value)}}
+                        {...register("username",{required:true,maxLength:25})}
                         />
                     </Form.Group>
+                    {errors.username && <small style={{color: "red"}}>Username is required</small>}
+                    <br></br>
+
+                    
                     <br></br>
                     <Form.Group>
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="email" placeholder="Your email"
-                        value={email}
-                        name="email"
-                        onChange={(e)=>{setEmail(e.target.value)}}
+                        {...register("email",{required:true,maxLength:80})}
                         />
                     </Form.Group>
+                    {errors.email && <span style={{color: "red"}}>Email is required</span>}
+                    <br></br>
+                    
+                    
                     <br></br>
                     <Form.Group>
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" placeholder="Your password"
-                        value={password}
-                        name="password"
-                        onChange={(e)=>{setPassword(e.target.value)}}
+                        {...register("password",{required:true, minLength:8})}
                         />
                     </Form.Group>
+                    {errors.password && <span style={{color: "red"}}>Password is required</span>}
+                    <br></br>
+                    
+                    
                     <br></br>
                     <Form.Group>
                         <Form.Label>Confirm Password</Form.Label>
                         <Form.Control type="password" placeholder="Confirm your password"
-                        value={confirmPassword}
-                        name="confirmPassword"
-                        onChange={(e)=>{setConfirmPassword(e.target.value)}}
+                        {...register("confirmPassword",{required:true,minLength:8})}
                         />
                     </Form.Group>
+                    {errors.confirmPassword && <span style={{color: "red"}}>Password is required</span>}
+                    <br></br>
+
+                    
                     <br></br>
                     <Form.Group>
-                        <Button as="sub" variant="primary" onClick={submitForm}>SignUp</Button>
+                        <Button as="sub" variant="primary" onClick={handleSubmit(submitForm)}>SignUp</Button>
                     </Form.Group>
                     <Form.Group>
-                        <smaill>Already logged in<Link to="/login">Login</Link></smaill>
+                        <small>Already logged in<Link to="/login">Login</Link></small>
                     </Form.Group>
                 </form>
             </div>
