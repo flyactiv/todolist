@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/main.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Navbar from './components/Navbar';
@@ -20,7 +21,7 @@ const App=()=>{
     
     return (
         <Router>
-            <div className="container">
+            <div className="">
                 <Navbar/>
                 <Switch>
                     <Route path="/signup">
