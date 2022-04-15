@@ -12,15 +12,36 @@ const SignUpPage=()=>{
 
 
     const submitForm=(data)=>{
-        console.log(data);
 
-        reset();
+        if(data.password === data.confirmPassword){
+
+            const body = {
+                username: data.username,
+                email: data.email,
+                password: data.password
+            }
+
+            const requestOptions = {
+                method: "POST",
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }
+
+
+            fetch('/auth/signup', requestOptions)
+                .then(res => res.json())
+                .then(data => console.log(data))
+                .catch(err => console.log(err))
+
+            reset()
+
+        }
+        else{
+            alert("Passwords do not match");
+        }
     }
-
-    console.log(watch("username"));
-    console.log(watch("email"));
-    console.log(watch("password"));
-    console.log(watch("confirmPassword"));
 
     return(
         <div className="container">
@@ -30,10 +51,10 @@ const SignUpPage=()=>{
                     <Form.Group>
                         <Form.Label>Username</Form.Label>
                         <Form.Control type="text" placeholder="Your username"
-                        {...register("username",{required:true,maxLength:25})}
+                            {...register("username",{required:true,maxLength:25})}
                         />
                     </Form.Group>
-                    {errors.username && <small style={{color: "red"}}>Username is required</small>}
+                    {errors.username && <small style={{ color: "red" }}>Username is required</small>}
                     <br></br>
 
                     
@@ -41,10 +62,10 @@ const SignUpPage=()=>{
                     <Form.Group>
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="email" placeholder="Your email"
-                        {...register("email",{required:true,maxLength:80})}
+                            {...register("email",{required:true,maxLength:80})}
                         />
                     </Form.Group>
-                    {errors.email && <span style={{color: "red"}}>Email is required</span>}
+                    {errors.email && <p style={{color: "red"}}><small>Email is required</small></p>}
                     <br></br>
                     
                     
@@ -52,10 +73,10 @@ const SignUpPage=()=>{
                     <Form.Group>
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" placeholder="Your password"
-                        {...register("password",{required:true, minLength:8})}
+                            {...register("password",{required:true, minLength:6})}
                         />
                     </Form.Group>
-                    {errors.password && <span style={{color: "red"}}>Password is required</span>}
+                    {errors.password && <p style={{color: "red"}}><small>Password is required</small></p>}
                     <br></br>
                     
                     
@@ -63,10 +84,10 @@ const SignUpPage=()=>{
                     <Form.Group>
                         <Form.Label>Confirm Password</Form.Label>
                         <Form.Control type="password" placeholder="Confirm your password"
-                        {...register("confirmPassword",{required:true,minLength:8})}
+                            {...register("confirmPassword",{required:true,minLength:6})}
                         />
                     </Form.Group>
-                    {errors.confirmPassword && <span style={{color: "red"}}>Password is required</span>}
+                    {errors.confirmPassword && <p style={{color: "red"}}><small>Confirm password is required</small></p>}
                     <br></br>
 
                     
