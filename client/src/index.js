@@ -30,7 +30,7 @@ const App=()=>{
                     <Route path="/login">
                         <LoginPage/>
                     </Route>
-                    <Route path="/create-recipe">
+                    <Route path="/create_recipe">
                         <CreateRecipePage/>
                     </Route>
                     <Route path="/">

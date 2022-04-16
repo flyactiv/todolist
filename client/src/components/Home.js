@@ -28,7 +28,7 @@ const LoggedinHome = () => {
             <h1>List of Todos</h1>
             {
                 recipes.map(
-                    ()=>(
+                    (recipe)=>(
                         <Recipe title = {recipe.title} description= {recipe.description}/>
                     )
                 )
