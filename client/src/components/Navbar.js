@@ -6,10 +6,10 @@ const LoggedInLinks = () => {
     return (
         <>
             <li className="nav-item">
-                <Link className="nav-link active" to="/">Home</Link>
+                <Link className="nav-link active" to="/">All Todos</Link>
             </li>
             <li className="nav-item">
-                <Link className="nav-link  active" to="/create_recipe">Create Recipes</Link>
+                <Link className="nav-link  active" to="/create_recipe">Create Todo</Link>
             </li>
             <li className="nav-item">
                 <a className="nav-link active" href="#" onClick={()=>{logout()}}>Log Out</a>
