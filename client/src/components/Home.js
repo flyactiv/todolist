@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../auth'
-import {Recipe} from './Recipe'
+import Recipe from './Recipe'
 
 
 const LoggedinHome = () => {
@@ -29,7 +29,7 @@ const LoggedinHome = () => {
             {
                 recipes.map(
                     ()=>(
-                        <Recipe title ={recipe.title} description={recipe.description}/>
+                        <Recipe title = {recipe.title} description= {recipe.description}/>
                     )
                 )
             }
