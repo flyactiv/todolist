@@ -16,7 +16,7 @@ const LoggedinHome = () => {
 
     useEffect(
         () => {
-            fetch('/recipe/recipes')
+            fetch(`/recipe/recipes`)
                 .then(res => res.json())
                 .then(data => {
                     setRecipes(data)
@@ -27,7 +27,7 @@ const LoggedinHome = () => {
 
 
     const getAllRecipes=()=>{
-        fetch('/recipe/recipes')
+        fetch(`/recipe/recipes`)
         .then(res => res.json())
         .then(data => {
             setRecipes(data)
@@ -60,7 +60,7 @@ const LoggedinHome = () => {
 
     const updateRecipe=(data)=>{
         console.log(data)
-
+        
         
 
         const requestOptions={
@@ -80,6 +80,31 @@ const LoggedinHome = () => {
 
             const reload =window.location.reload()
             reload() 
+        })
+        .catch(err=>console.log(err))
+    }
+
+
+
+    const deleteRecipe=(id)=>{
+        console.log(id)
+        
+
+        const requestOptions={
+            method:'DELETE',
+            headers:{
+                'content-type':'application/json',
+                'Authorization':`Bearer ${JSON.parse(token)}`
+            }
+        }
+
+
+        fetch(`/recipe/recipe/${id}`,requestOptions)
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data)
+            getAllRecipes()
+        
         })
         .catch(err=>console.log(err))
     }
@@ -136,7 +161,7 @@ const LoggedinHome = () => {
                         description={recipe.description}
                         onClick={()=>{showModal(recipe.id)}}
 
-                        
+                        onDelete={()=>{deleteRecipe(recipe.id)}}
 
                     />
                 )
