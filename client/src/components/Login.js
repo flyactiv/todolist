@@ -66,7 +66,7 @@ const LoginPage=()=>{
                         {...register('password',{required:true,minLength:6})}
                     />
                 </Form.Group>
-                {errors.username && <p style={{color:'red'}}><small>Password is required</small></p>}
+                {errors.password && <p style={{color:'red'}}><small>Password is required</small></p>}
                 <br></br>
                 <Form.Group>
                     <Button as="sub" variant="primary" onClick={handleSubmit(loginUser)}>Login</Button>

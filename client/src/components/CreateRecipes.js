@@ -37,7 +37,7 @@ const CreateRecipePage=()=>{
     return(
         <div className="container">
            
-        <h1>Create A Recipe</h1>
+        <h1>Create A Todo</h1>
         <form>
             <Form.Group>
                 <Form.Label>Title</Form.Label>
